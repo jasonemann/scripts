@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/local/bin/bash
 
 ubctl="/usr/local/sbin/unbound-control"
 
@@ -14,15 +14,15 @@ dns_zone=$4
 
 case "$event" in
 	commit)
-		echo "Would run: $ubctl local_data \"$client_hostname.$dns_zone IN A $client_ipaddr\""
+		logger -t dhcp-event  "Would run: $ubctl local_data \"$client_hostname.$dns_zone IN A $client_ipaddr\""
 	;;
 	release)
 	;&
 	expiry)
-		echo "Would run: $ubctl local_data_remove \"$client_hostname.$dns_zone\""
+		logger -t dhcp-event  "Would run: $ubctl local_data_remove \"$client_hostname.$dns_zone\""
 	;;
 	*)
-		echo "Unknown event type."
+		echo "Error: Unknown event type."
 		exit 1
 esac
 
